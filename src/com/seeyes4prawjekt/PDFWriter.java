@@ -35,7 +35,7 @@ public class PDFWriter implements Runnable {
 	public void savePDF() throws IOException {
 
 		Runtime runtime = Runtime.getRuntime();
-		String[] args = { "pdflatex", " temp.tex" };
+		String[] args = { "pdflatex", " " + name + ".tex"};
 		Process process = runtime.exec(args, null, dir);
 
 		// Process process = new ProcessBuilder(args).start();

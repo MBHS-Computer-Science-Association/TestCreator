@@ -1,7 +1,10 @@
 package com.seeyes4prawjekt;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.concurrent.locks.Lock;
 
@@ -9,22 +12,37 @@ public class TexWriter implements Runnable {
 
 	private String dir;
 	private String name;
+	@SuppressWarnings("unused")
 	private String contents;
 	private Lock l;
 	private CurrentWorkingDirectory path;
+	private PrintStream o;
 
-	public TexWriter(Lock l, CurrentWorkingDirectory path) {
-		name = "temp";
+	public TexWriter(Lock l, CurrentWorkingDirectory path, String name) {
+		this.name = name;
 		this.l = l;
 		this.path = path;
+	}
+
+	public static String javanize(String str) {
+		String out = "";
+		int val = str.length();
+		for (int i = 0; i < val; i++) {
+			if (str.charAt(i) == '\\') {
+				out = out + '\\' + '\\';
+			} else {
+				out = out + str.charAt(i);
+			}
+		}
+		return out;
 	}
 
 	public void run() {
 		try {
 			l.lock();
 			dir = path.getCanonicalPath();
-			makeContents();
 			writeToFile();
+			makeContents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -32,17 +50,22 @@ public class TexWriter implements Runnable {
 		}
 	}
 
-	public void makeContents() {
-		contents = "\\documentclass{article}" + '\n' + "\\title{First Quarter Objectives}" + '\n' + "\\date{8/31/2016}"
-				+ '\n' + "\\author{ Jarod Norwood \\and Nicholas Roth}" + '\n' +
-
-				"\\begin{document}" + '\n' + "	\\maketitle" + '\n' + "\\end{document}";
+	public void makeContents() throws IOException {
+		FileReader fr = new FileReader(new File("sample.txt"));
+//		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(fr);
+		String line = null;
+		while((line = br.readLine()) != null){
+			o.println(line);
+		}
+		br.close();
 	}
 
 	public void writeToFile() throws FileNotFoundException {
 		File output = new File(dir, name + ".tex");
-		PrintStream o = new PrintStream(output);
-		o.println(contents);
+		o = new PrintStream(output);
+//		o.println(contents);
+//		o.close();
 	}
 
 	public String getName() {

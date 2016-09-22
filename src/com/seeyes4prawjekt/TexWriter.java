@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.concurrent.locks.Lock;
 
-public class TexWriter implements Runnable{
+public class TexWriter implements Runnable {
 
 	private String dir;
 	private String name;
@@ -31,22 +31,20 @@ public class TexWriter implements Runnable{
 		}
 	}
 
-	public void makeContents(){
-		contents = "\\documentclass{article}" + '\n' + "\\title{First Quarter Objectives}" + '\n'
-				+ "\\date{8/31/2016}" + '\n' + "\\author{ Jarod Norwood \\and Nicholas Roth}" + '\n' +
+	public void makeContents() {
+		contents = "\\documentclass{article}" + '\n' + "\\title{First Quarter Objectives}" + '\n' + "\\date{8/31/2016}"
+				+ '\n' + "\\author{ Jarod Norwood \\and Nicholas Roth}" + '\n' +
 
 				"\\begin{document}" + '\n' + "	\\maketitle" + '\n' + "\\end{document}";
 	}
-
-	
 
 	public void writeToFile() throws FileNotFoundException {
 		File output = new File(dir, name + ".tex");
 		PrintStream o = new PrintStream(output);
 		o.println(contents);
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 

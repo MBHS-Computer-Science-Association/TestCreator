@@ -11,17 +11,18 @@ public class TexWriter implements Runnable {
 	private String name;
 	private String contents;
 	private Lock l;
+	private CurrentWorkingDirectory path;
 
-	public TexWriter(Lock l) {
+	public TexWriter(Lock l, CurrentWorkingDirectory path) {
 		name = "temp";
 		this.l = l;
+		this.path = path;
 	}
 
 	public void run() {
 		try {
 			l.lock();
-			CurrentWorkingDirectory pathFinder = new CurrentWorkingDirectory();
-			dir = pathFinder.getCanonicalPath();
+			dir = path.getCanonicalPath();
 			makeContents();
 			writeToFile();
 		} catch (Exception e) {

@@ -12,17 +12,18 @@ public class PDFWriter implements Runnable {
 	private File dir;
 	private String name;
 	private Lock l;
-
-	public PDFWriter(String name, Lock l) {
+	private CurrentWorkingDirectory path;
+	
+	public PDFWriter(String name, Lock l, CurrentWorkingDirectory path) {
 		this.name = name;
 		this.l = l;
+		this.path = path;
 	}
 
 	public void run() {
 		try {
 			l.lock();
-			CurrentWorkingDirectory pathFinder = new CurrentWorkingDirectory();
-			dir = new File(pathFinder.getCanonicalPath());
+			dir = new File(path.getCanonicalPath());
 			savePDF();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -14,14 +14,16 @@ public class TestCreator {
 
 	public TestCreator(String[] authors){
 		System.out.println("Thank you for using TestCreator! This product was brought to you by " + authors[0] + " and " + authors[1] + "Please understand that this is not a finished build and we at seeyes4prawjekt are always working to improve your experience! Have a nice day!");
+		
 		Lock l = new ReentrantLock();
-
-		TexWriter texWriter = new TexWriter(l);
+		CurrentWorkingDirectory pathFinder = new CurrentWorkingDirectory();
+		
+		TexWriter texWriter = new TexWriter(l, pathFinder);
 		Thread texMaker = new Thread(texWriter);
 		texMaker.start();
 
 		pdfName = "quiz1PDF";
-		PDFWriter pdfWriter = new PDFWriter(pdfName, l);
+		PDFWriter pdfWriter = new PDFWriter(pdfName, l, pathFinder);
 		Thread pdfMaker = new Thread(pdfWriter);
 		pdfMaker.start();
 

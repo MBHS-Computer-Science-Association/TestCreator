@@ -7,7 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.concurrent.locks.Lock;
-
+/**
+ * The TexWriter Thread works to fill the temporary .tex file so that PDFWriter can convert it into a PDF
+ * @author Jarod Norwood
+ *
+ */
 public class TexWriter implements Runnable {
 
 	private String dir;
@@ -17,13 +21,24 @@ public class TexWriter implements Runnable {
 	private Lock l;
 	private CurrentWorkingDirectory path;
 	private PrintStream o;
-
+	
+	/**
+	 * Instantiates the 
+	 * @param l - the semaphore for restricting access to the temporary .tex file
+	 * @param path - Current Directory selected by the user
+	 * @param name - name of the quiz 
+	 */
 	public TexWriter(Lock l, CurrentWorkingDirectory path, String name) {
 		this.name = name;
 		this.l = l;
 		this.path = path;
 	}
-
+	/**
+	 * converts single backslashes into doubles
+	 * @deprecated
+	 * @param str input string
+	 * @return
+	 */
 	public static String javanize(String str) {
 		String out = "";
 		int val = str.length();
@@ -36,7 +51,9 @@ public class TexWriter implements Runnable {
 		}
 		return out;
 	}
-
+	/**
+	 * Initialization once TestCreator has created the TexWriter Thread
+	 */
 	public void run() {
 		try {
 			l.lock();
@@ -49,7 +66,10 @@ public class TexWriter implements Runnable {
 			l.unlock();
 		}
 	}
-
+	/**
+	 * Creates the contents of the temporary .tex file
+	 * @throws IOException
+	 */
 	public void makeContents() throws IOException {
 		FileReader fr = new FileReader(new File("sample.txt"));
 //		InputStreamReader isr = new InputStreamReader(is);
@@ -60,14 +80,20 @@ public class TexWriter implements Runnable {
 		}
 		br.close();
 	}
-
+	/**
+	 * creates the PrintStream for outputting to the temporary .tex file 
+	 * @throws FileNotFoundException
+	 */
 	public void writeToFile() throws FileNotFoundException {
 		File output = new File(dir, name + ".tex");
 		o = new PrintStream(output);
 //		o.println(contents);
 //		o.close();
 	}
-
+	/**
+	 * 
+	 * @return name of the PDF/.tex file
+	 */
 	public String getName() {
 		return name;
 	}

@@ -1,7 +1,11 @@
 package com.seeyes4prawjekt;
 
 import java.io.File;
-
+/**
+ * Stores the user-specified directory for the output of the PDF document
+ * @author Jarod Norwood
+ *
+ */
 public class CurrentWorkingDirectory {
 	String canPath;
 	String absPath;

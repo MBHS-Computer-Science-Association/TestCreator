@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.locks.Lock;
-
+/**
+ * The PDFWriter Thread is the Thread involved in printing the PDF document from the .tex markup script
+ * @author Jarod Norwood
+ *
+ */
 public class PDFWriter implements Runnable {
 
 	private File dir;
@@ -14,12 +18,20 @@ public class PDFWriter implements Runnable {
 	private Lock l;
 	private CurrentWorkingDirectory path;
 	
+	/**
+	 * Instantiates the PDFWriter Thread
+	 * @param name - name of the PDF
+	 * @param l - Semaphore to control access to the .tex file
+	 * @param path - user-specified directory to which the PDF document is output
+	 */
 	public PDFWriter(String name, Lock l, CurrentWorkingDirectory path) {
 		this.name = name;
 		this.l = l;
 		this.path = path;
 	}
-
+	/**
+	 * initializes the PDFWriter thread
+	 */
 	public void run() {
 		try {
 			l.lock();
@@ -31,7 +43,10 @@ public class PDFWriter implements Runnable {
 			l.unlock();
 		}
 	}
-
+	/**
+	 * Writes the .tex file to a PDF document
+	 * @throws IOException
+	 */
 	public void savePDF() throws IOException {
 
 		Runtime runtime = Runtime.getRuntime();

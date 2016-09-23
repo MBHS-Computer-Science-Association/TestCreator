@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.concurrent.locks.Lock;
 /**
- * The TexWriter Thread works to fill the temporary .tex file so that PDFWriter can convert it into a PDF
+ * The TexWriter Thread works to fill the temporary .tex file so that PDFWriter can convert it into a PDF document
  * @author Jarod Norwood
  *
  */

@@ -2,9 +2,13 @@ package com.seeyes4prawjekt;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import com.seeyes4prawjekt.gui.*;
+
 /**
  * Main class of the TestCreator project
- * @author Jarod Norwood, Nicholas Roth
+ * 
+ * @author Jarod Norwood
+ * @author Nicholas Roth
  *
  */
 public class TestCreator {
@@ -31,6 +35,9 @@ public class TestCreator {
 	 * it also initializes the Semaphore for resource management of the temporary .tex file
 	 */
 	public void init(){
+		UIManage gui = new UIManage();
+		Thread Gui = new Thread(gui);
+		
 		String name = "temp";
 		
 		Lock l = new ReentrantLock();

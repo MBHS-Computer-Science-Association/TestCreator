@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.locks.Lock;
+
 /**
- * The PDFWriter Thread is the Thread involved in printing the PDF document from the .tex markup script
+ * The PDFWriter Thread is the Thread involved in printing the PDF document from
+ * the .tex markup script
+ * 
  * @author Jarod Norwood
- *
+ * @author Nicholas Roth
+ * 
  */
 public class PDFWriter implements Runnable {
 
@@ -17,18 +21,23 @@ public class PDFWriter implements Runnable {
 	private String name;
 	private Lock l;
 	private CurrentWorkingDirectory path;
-	
+
 	/**
 	 * Instantiates the PDFWriter Thread
-	 * @param name - name of the PDF
-	 * @param l - Semaphore to control access to the .tex file
-	 * @param path - user-specified directory to which the PDF document is output
+	 * 
+	 * @param name
+	 *            - name of the PDF
+	 * @param l
+	 *            - Semaphore to control access to the .tex file
+	 * @param path
+	 *            - user-specified directory to which the PDF document is output
 	 */
 	public PDFWriter(String name, Lock l, CurrentWorkingDirectory path) {
 		this.name = name;
 		this.l = l;
 		this.path = path;
 	}
+
 	/**
 	 * initializes the PDFWriter thread
 	 */
@@ -43,14 +52,16 @@ public class PDFWriter implements Runnable {
 			l.unlock();
 		}
 	}
+
 	/**
 	 * Writes the .tex file to a PDF document
+	 * 
 	 * @throws IOException
 	 */
 	public void savePDF() throws IOException {
 
 		Runtime runtime = Runtime.getRuntime();
-		String[] args = { "pdflatex", " " + name + ".tex"};
+		String[] args = { "pdflatex", " " + name + ".tex" };
 		Process process = runtime.exec(args, null, dir);
 
 		// Process process = new ProcessBuilder(args).start();

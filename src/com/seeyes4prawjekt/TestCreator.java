@@ -2,7 +2,8 @@ package com.seeyes4prawjekt;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import com.seeyes4prawjekt.gui.*;
+
+import webcam.wewatchyour.*;
 
 /**
  * Main class of the TestCreator project

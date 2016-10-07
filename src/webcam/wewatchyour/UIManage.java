@@ -1,4 +1,4 @@
-package com.seeyes4prawjekt.gui;
+package webcam.wewatchyour;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -13,8 +13,9 @@ public class UIManage implements Runnable {
 	}
 
 	public void run() {
-
+		OpenScreen lander = new OpenScreen();
 	}
+	
 	//make non static ASAP
 	public static Image resizeImgIcon(ImageIcon srcImgIcon, int w, int h) {
 		Image srcImg = srcImgIcon.getImage();

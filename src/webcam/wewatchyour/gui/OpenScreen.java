@@ -1,4 +1,4 @@
-package webcam.wewatchyour;
+package webcam.wewatchyour.gui;
 
 import java.awt.EventQueue;
 

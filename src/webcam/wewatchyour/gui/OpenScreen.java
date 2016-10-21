@@ -1,31 +1,31 @@
 package webcam.wewatchyour.gui;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.locks.Lock;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 public class OpenScreen {
 
 	private JFrame frame;
-
+	private Lock l;
 	/**
 	 * Create the application.
 	 */
-	public OpenScreen() {
-		OpenScreen window = new OpenScreen();
+	public OpenScreen(Lock l) {
+		this.l = l;
 		initialize();
-		window.frame.setVisible(true);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class OpenScreen {
 		JButton btnNew = new JButton("New...");
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainEditorWindow editorWindow = new MainEditorWindow();
+				MainEditorWindow editorWindow = new MainEditorWindow(l);
 			}
 		});
 		btnNew.setBounds(543, 236, 71, 23);

@@ -1,21 +1,26 @@
 package webcam.wewatchyour.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.concurrent.locks.Lock;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+/**
+ * 
+ * @author Nicholas
+ *
+ */
 public class MainEditorWindow {
 
 	private JFrame frame;
@@ -24,12 +29,17 @@ public class MainEditorWindow {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-
+	private Lock l;
 	/**
 	 * Create the application.
 	 */
-	public MainEditorWindow() {
+	public MainEditorWindow(Lock l) {
+		this.l = l;
 		initialize();
+	}
+	
+	invokeBufferStuff(){
+		
 	}
 
 	/**
@@ -164,11 +174,17 @@ public class MainEditorWindow {
 				 
 				if (userSelection == JFileChooser.APPROVE_OPTION) {
 				    File fileToSave = fileChooser.getSelectedFile();
-				    System.out.println(fileToSave.getName() + " " + fileToSave.getPath()); //debugging, can remove
+					PrintStream o;
+					try {
+						o = new PrintStream(new File("file.txt"));
+						o.println(fileToSave.getName() + " " + fileToSave.getPath()); //debugging, can remove
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
 				    																	   //use file to get desired name and path of output
 				}
 			}
-		});
+		}); 
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 5;

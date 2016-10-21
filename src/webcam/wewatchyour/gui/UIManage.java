@@ -4,19 +4,23 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.locks.Lock;
+
 import javax.swing.ImageIcon;
 
 public class UIManage implements Runnable {
 
-	public UIManage() {
-
+	private Lock l;
+	public UIManage(Lock l) {
+		this.l = l;
 	}
 
 	public void run() {
-		OpenScreen lander = new OpenScreen();
+		l.lock();
+		OpenScreen lander = new OpenScreen(l);
 	}
-	
-	//make non static ASAP
+
+	// make non static ASAP
 	public static Image resizeImgIcon(ImageIcon srcImgIcon, int w, int h) {
 		Image srcImg = srcImgIcon.getImage();
 		BufferedImage resizedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);

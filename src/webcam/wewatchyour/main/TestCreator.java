@@ -37,7 +37,7 @@ public class TestCreator {
 	 */
 	public void init(){
 		Lock WorkLock = new ReentrantLock();
-		UIManage gui = new UIManage();
+		UIManage gui = new UIManage(WorkLock);
 		Thread Gui = new Thread(gui);
 		
 		String name = "temp";

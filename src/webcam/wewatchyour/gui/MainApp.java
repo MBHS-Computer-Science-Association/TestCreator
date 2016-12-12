@@ -1,7 +1,10 @@
 package webcam.wewatchyour.gui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.locks.Lock;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,20 +17,21 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private Lock lock;
+    
     
     /**
      * Constructor,can initialize window with some data if want
      */
-    public MainApp(Lock lock, String[] args) {
+   public MainApp(){
+	   
+   }
+    
+    public MainApp(String[] args) {
     	launch(args);
-    	this.lock = lock;
     }
     
-    public void releaseLock(){
-    	lock.unlock();
-    }
-
+   
+   
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;

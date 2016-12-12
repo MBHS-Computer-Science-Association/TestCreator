@@ -1,19 +1,33 @@
 package webcam.wewatchyour.gui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class UIManage {
-	private ReentrantLock lock;
+public class UIManage implements Runnable{
 	private MainApp gui;
+	private boolean shouldHold = true;
+	private Lock lock;
+	String[] args;
 	
-	public UIManage(ReentrantLock lock, String[] args){
+	public UIManage(Lock lock, String[] args){
 		this.lock = lock;
+		this.args = args;
 		init(args);
 	}
 	
+	
+	
 	private void init(String[] args){
-		lock.lock();
-		gui = new MainApp(lock, args);
+
+		gui = new MainApp(args);
+	}
+
+	@Override
+	public void run() {
 	}
 }

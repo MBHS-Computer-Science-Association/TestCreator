@@ -18,11 +18,11 @@ public class CurrentWorkingDirectory {
 
 	public CurrentWorkingDirectory() {
 		try {
-			FileReader fr = new FileReader(new File("sample.txt"));
-			BufferedReader br = new BufferedReader(fr);
-			String line = null;
-			line = br.readLine();
-			br.close();
+//			FileReader fr = new FileReader(new File("sample.txt"));
+//			BufferedReader br = new BufferedReader(fr);
+//			String line = null;
+//			line = br.readLine();
+//			br.close();
 			File directory = new File(".");
 			// System.out.println ("Current directory's canonical path: "
 			canPath = directory.getCanonicalPath();
@@ -34,7 +34,7 @@ public class CurrentWorkingDirectory {
 	}
 
 	public String getCanonicalPath() {
-		return canPath;
+		return canPath + "\\src\\";
 	}
 
 	public String getAbsolutePath() {

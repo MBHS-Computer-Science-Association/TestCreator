@@ -54,7 +54,8 @@ public class MainAppController {
     	try {
 			PrintStream output = new PrintStream(new File("sample.txt"));
 			output.print(str);
-			mainApp.releaseLock();
+			PrintStream release = new PrintStream(new File("go.txt"));
+			release.print("Y");
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}

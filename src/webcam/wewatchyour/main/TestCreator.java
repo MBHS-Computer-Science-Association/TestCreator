@@ -1,9 +1,13 @@
 package webcam.wewatchyour.main;
 
-import java.util.concurrent.locks.Lock;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
 
-import webcam.wewatchyour.gui.*;
+import webcam.wewatchyour.gui.UIManage;
 
 /**
  * Main class of the TestCreator project
@@ -14,6 +18,7 @@ import webcam.wewatchyour.gui.*;
  */
 public class TestCreator {
 	String pdfName;
+	private boolean shouldHold = true;
 	
 	/**
 	 * Main method
@@ -29,16 +34,34 @@ public class TestCreator {
 	 * @param authors - Project creators
 	 */
 	public TestCreator(String[] authors){
-		System.out.println("Thank you for using TestCreator! This product was brought to you by " + authors[0] + " and " + authors[1] + " Please understand that this is not a finished build and we at seeyes4prawjekt are always working to improve your experience! Have a nice day!");
+		System.out.println("Thank you for using TestCreator! This product was brought to you by " + authors[0] + " and " + authors[1] + " Please understand that this is not a finished build and we at wewatchyour.webcam are always working to improve your experience! Have a nice day!");
 	}
 	/**
 	 * This method invokes the commands to create the TexWriter and PDFWriter Threads
 	 * it also initializes the Semaphore for resource management of the temporary .tex file
 	 */
 	public void init(String[] args){
-		ReentrantLock WorkLock = new ReentrantLock();
-		UIManage gui = new UIManage(WorkLock, args);
+		try {
+			PrintStream output;
+			output = new PrintStream(new File("go.txt"));
+			output.print("wersxtdcfhg");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
+		ReentrantLock WorkLock = new ReentrantLock();
+		UIManage gui = new UIManage( WorkLock ,args);
+		Thread Gui = new Thread(gui);
+		WorkLock.lock();
+		while(shouldHold){
+			try {
+				Thread.sleep(100);
+				releaseLock();
+			} catch (InterruptedException | IOException e) {
+				e.printStackTrace();
+			}	
+		}
+		WorkLock.unlock();
 		String name = "temp";
 		
 		CurrentWorkingDirectory pathFinder = new CurrentWorkingDirectory();
@@ -48,7 +71,7 @@ public class TestCreator {
 		texMaker.start();
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -56,6 +79,14 @@ public class TestCreator {
 		PDFWriter pdfWriter = new PDFWriter(name, WorkLock, pathFinder);
 		Thread pdfMaker = new Thread(pdfWriter);
 		pdfMaker.start();
+		
+		
 	}
+	 public void releaseLock() throws IOException{
+	    	Scanner scanny = new Scanner(new File("go.txt"));
+	    	if(scanny.next().equals("Y"))
+	    		shouldHold = false;
+	    	scanny.close();
+	    }
 
 }

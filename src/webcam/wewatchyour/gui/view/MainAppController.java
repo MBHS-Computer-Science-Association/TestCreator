@@ -1,13 +1,18 @@
 package webcam.wewatchyour.gui.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import webcam.wewatchyour.gui.MainApp;
 
@@ -20,6 +25,10 @@ public class MainAppController {
     private CheckBox manualEntryOff;
     @FXML
     private CheckBox manualEntryOn;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Button submit;
 
     /**
      * The constructor.
@@ -27,6 +36,7 @@ public class MainAppController {
      */
     public MainAppController() {
     }
+    
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -35,6 +45,19 @@ public class MainAppController {
     @FXML
     private void initialize() {
         
+    }
+    
+    @FXML
+    private void ManualEntryHandler(ActionEvent e){
+    	String str = textArea.getText();
+    	
+    	try {
+			PrintStream output = new PrintStream(new File("sample.txt"));
+			output.print(str);
+			mainApp.releaseLock();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
     }
     
     @FXML

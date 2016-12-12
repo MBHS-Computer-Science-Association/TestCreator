@@ -1,13 +1,11 @@
 package webcam.wewatchyour.gui;
 
 import java.io.IOException;
+import java.util.concurrent.locks.Lock;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import webcam.wewatchyour.gui.view.MainAppController;
@@ -16,12 +14,18 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private Lock lock;
     
     /**
      * Constructor,can initialize window with some data if want
      */
-    public MainApp() {
-
+    public MainApp(Lock lock, String[] args) {
+    	launch(args);
+    	this.lock = lock;
+    }
+    
+    public void releaseLock(){
+    	lock.unlock();
     }
 
     @Override
@@ -31,7 +35,7 @@ public class MainApp extends Application {
 
         initRootLayout();
 
-        showPersonOverview();
+        showMainApp();
     }
 
     /**
@@ -56,7 +60,7 @@ public class MainApp extends Application {
     /**
      * Shows the person overview inside the root layout.
      */
-    public void showPersonOverview() {
+    public void showMainApp() {
     	
         try {
             // Load person overview.
@@ -84,7 +88,7 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 }

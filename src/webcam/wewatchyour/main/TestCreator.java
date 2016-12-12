@@ -22,7 +22,7 @@ public class TestCreator {
 	public static void main(String[] args){
 		String[] authors = {"Jarod Norwood", "Nicholas Roth"};
 		TestCreator program = new TestCreator(authors);
-		program.init();
+		program.init(args);
 	}
 	/**
 	 * 
@@ -35,21 +35,25 @@ public class TestCreator {
 	 * This method invokes the commands to create the TexWriter and PDFWriter Threads
 	 * it also initializes the Semaphore for resource management of the temporary .tex file
 	 */
-	public void init(){
-		Lock WorkLock = new ReentrantLock();
-		UIManage gui = new UIManage(WorkLock);
-		Thread Gui = new Thread(gui);
+	public void init(String[] args){
+		ReentrantLock WorkLock = new ReentrantLock();
+		UIManage gui = new UIManage(WorkLock, args);
 		
 		String name = "temp";
 		
-		Lock TeXLock = new ReentrantLock();
 		CurrentWorkingDirectory pathFinder = new CurrentWorkingDirectory();
 		
-		TexWriter texWriter = new TexWriter(TeXLock, pathFinder, name);
+		TexWriter texWriter = new TexWriter(WorkLock, pathFinder, name);
 		Thread texMaker = new Thread(texWriter);
 		texMaker.start();
-
-		PDFWriter pdfWriter = new PDFWriter(name, TeXLock, pathFinder);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		PDFWriter pdfWriter = new PDFWriter(name, WorkLock, pathFinder);
 		Thread pdfMaker = new Thread(pdfWriter);
 		pdfMaker.start();
 	}

@@ -16,8 +16,7 @@ import webcam.wewatchyour.gui.view.MainAppController;
 public class MainApp extends Application {
 
     private Stage primaryStage;
-    private BorderPane rootLayout;
-    
+    private BorderPane rootLayout;    
     
     /**
      * Constructor,can initialize window with some data if want
@@ -29,8 +28,6 @@ public class MainApp extends Application {
     public MainApp(String[] args) {
     	launch(args);
     }
-    
-   
    
     @Override
     public void start(Stage primaryStage) {

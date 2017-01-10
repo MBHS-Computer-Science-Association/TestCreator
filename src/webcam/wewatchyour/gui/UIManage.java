@@ -21,7 +21,6 @@ public class UIManage implements Runnable{
 	}
 	
 	
-	
 	private void init(String[] args){
 
 		gui = new MainApp(args);
